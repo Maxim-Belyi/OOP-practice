@@ -4,7 +4,7 @@ namespace Library\Traits;
 trait HasUniqueID {
     private string $uuid;
 
-    private function generateID(): void {
+    protected function generateID(): void {
         $this->uuid = uniqid('id_', 'true');
     }
 
