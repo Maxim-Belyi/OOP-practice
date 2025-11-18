@@ -50,7 +50,7 @@
 2.  Клонируйте репозиторий:
     ```bash
     git clone https://github.com/Maxim-Belyi/OOP-practice.git
-    cd oop
+    cd OOP-practice
     ```
 3.  Выполните команду:
     ```sh
