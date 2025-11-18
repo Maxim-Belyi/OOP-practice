@@ -8,6 +8,7 @@ use Library\Core\Library;
 class Member
 {
     use HasUniqueID;
+
     private string $name;
     private array $borrowedItems = [];
 
@@ -16,25 +17,27 @@ class Member
         $this->name = $name;
         $this->generateID();
     }
+
     public function getName(): string
     {
-        return "Имя пользователя: {$this->name}" . "<br>";
+        return "<strong>{$this->name}</strong>" . "<br>";
     }
+
     public function borrowItem(LibraryItem $item): void
     {
         $this->borrowedItems[] = $item;
     }
-    public function returnItems(LibraryItem $item): void
+
+    public function returnItem(LibraryItem $item): void
     {
-        array_search($item, $this->borrowedItems, true);
         $this->borrowedItems = array_filter(
             $this->borrowedItems,
             fn($borrowedItem) => $borrowedItem->getUniqueID() !== $item->getUniqueID()
         );
     }
+
     public function getBorrowedItems(): array
     {
         return $this->borrowedItems;
     }
-
 }

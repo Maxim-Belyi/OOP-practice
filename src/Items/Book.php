@@ -18,7 +18,7 @@ class Book extends LibraryItem implements Borrowable
 
     public function getSummary()
     {
-        return "{$this->title}" . "От автора:" . "{$this->author}" . "br";
+        return "<u>'{$this->title}'</u> " . "<strong>Автор:</strong> " . "{$this->author}"  . "<br>";
     }
 
     public function borrow(): void

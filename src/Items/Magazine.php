@@ -8,7 +8,7 @@ class Magazine extends LibraryItem
 {
     private int $issueNumber;
 
-    public function __construct(string $title, int $issueMember)
+    public function __construct(string $title, int $issueNumber)
     {
         parent::__construct($title);
         $this->issueNumber = $issueNumber;
@@ -16,6 +16,6 @@ class Magazine extends LibraryItem
 
     public function getSummary()
     {
-        return "Журнал: " . "{$this->title}" . "Выпуск №: " . "{$this->issueNumber}";
+        return "<strong>Журнал:</strong> " . "{$this->title}" . "<br>" . "Выпуск №: " . "{$this->issueNumber}" . "<br>";
     }
 }

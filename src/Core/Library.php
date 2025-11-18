@@ -9,20 +9,20 @@ class  Library
     private array $items = [];
     private array $members = [];
 
-    public function addLibraryItem(LibraryItem $item)
+    public function addLibraryItem(LibraryItem $item): void
     {
         $this->items[] = $item;
     }
 
-    public function registerMember(Member $member)
+    public function registerMember(Member $member): void
     {
         $this->members[] = $member;
     }
 
-    public function lendItem(Member $member, LibraryItem $item)
+    public function lendItem(Member $member, LibraryItem $item): void
     {
         if (!$item instanceof Borrowable) {
-            echo "Ошибка! {$item->getSummary()} не одалживаемое издание" . "<br>";
+            echo "Ошибка!" . "<br>" . "{$item->getSummary()} не одалживаемое издание" . "<br>";
             return;
         }
 
@@ -33,21 +33,20 @@ class  Library
 
         $item->borrow();
         $member->borrowItem($item);
-        echo "Успешный успех!" . "<br>" . "Мы выдали {$item->getSummary()} пользователю {$member->getName()}";
+        echo "Успешно!" . "<br>" . "Мы выдали {$item->getSummary()} пользователю {$member->getName()}";
     }
 
-    public function acceptReturn(LibraryItem $item) {
+    public function acceptReturn(LibraryItem $item)
+    {
         if (!$item instanceof Borrowable) {
             echo "Ошибка!" . "<br>" . "{$item->getSummary()}" . " не относится к изданиям, которые можно взять =(" . "<br>";
             return;
         }
-
         $item->returnItem();
-
         //ищем кто взял и удаляем из списка
         foreach ($this->members as $member) {
             foreach ($member->getBorrowedItems() as $borrowedItem) {
-                if ($borrowedItem->getUniqueID() === $item->getUniqueID()){
+                if ($borrowedItem->getUniqueID() === $item->getUniqueID()) {
                     $member->returnItem($item);
                     echo "Принят возврат " . "{$item->getSummary()}" . " от пользователя: " . "{$member->getName()}" . "<br>";
                     return;
@@ -55,4 +54,27 @@ class  Library
             }
         }
     }
+
+    public function getAvailableItems() {
+        $availableItems = [];
+
+        foreach ($this->items as $item) {
+            if ($item instanceof Borrowable && $item->isAvailable()) {
+                $availableItems[] = $item;
+            }
+        }
+        return $availableItems;
+    }
+
+    public function getUnavailableItems() {
+        $unavailableItems = [];
+
+        foreach ($this->items as $item) {
+            if (!$item instanceof Borrowable) {
+                $unavailableItems[] = $item;
+            }
+        }
+        return $unavailableItems;
+    }
+
 }
